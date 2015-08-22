@@ -649,11 +649,11 @@ class Sales extends Secure_area
 	{
 		$person_info = $this->Employee->get_logged_in_employee_info();
 		$data['cart']=$this->sale_lib->get_cart();	 
-        $data['modes']=array('sale'=>$this->lang->line('sales_sale'),'return'=>$this->lang->line('sales_return'));
-        $data['mode']=$this->sale_lib->get_mode();
+                $data['modes']=array('sale'=>$this->lang->line('sales_sale'),'return'=>$this->lang->line('sales_return'));
+                $data['mode']=$this->sale_lib->get_mode();
 
-        $data['stock_locations']=$this->Stock_locations->get_allowed_locations('sales');
-        $data['stock_location']=$this->sale_lib->get_sale_location();
+                $data['stock_locations']=$this->Stock_locations->get_allowed_locations('sales');
+                $data['stock_location']=$this->sale_lib->get_sale_location();
         
 		$data['subtotal']=$this->sale_lib->get_subtotal(TRUE);
 		$data['tax_exclusive_subtotal']=$this->sale_lib->get_subtotal(TRUE, TRUE);

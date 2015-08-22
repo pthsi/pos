@@ -47,6 +47,27 @@ class Item_quantities extends CI_Model
         }          
         return $result;   
     }
+    
+    function get_item_quantity_suspend($item_id, $location_id)
+    {     
+        $this->db->from('sales_suspended_items');
+        $this->db->where('item_id',$item_id);
+        $this->db->where('item_location',$location_id);
+        $result = $this->db->get()->row();
+        if(empty($result) == true)
+        {
+            //Get empty base parent object, as $item_id is NOT an item
+            $result=new stdClass();
+            //Get all the fields from items table (TODO to be reviewed)
+            $fields = $this->db->list_fields('sales_suspended_items');
+            foreach ($fields as $field)
+            {
+                $result->$field='';
+            }
+            $result->quantity_purchased = 0;
+        }          
+        return $result;   
+    }
 	
 	/*
 	 * changes to quantity of an item according to the given amount.

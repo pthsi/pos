@@ -240,7 +240,7 @@ class Sale_lib
     	$this->CI->session->unset_userdata('giftcard_remainder');
     }
     
-	function add_item($item_id,$quantity=1,$item_location,$discount=0,$price=null,$description=null,$serialnumber=null)
+    function add_item($item_id,$quantity=1,$item_location,$discount=0,$price=null,$description=null,$serialnumber=null)
 	{
 		//make sure item exists	     
 		if($this->validate_item($item_id) == false)
@@ -298,8 +298,9 @@ class Sale_lib
 			'allow_alt_description'=>$item_info->allow_alt_description,
 			'is_serialized'=>$item_info->is_serialized,
 			'quantity'=>$quantity,
-            'discount'=>$discount,
+                        'discount'=>$discount,
 			'in_stock'=>$this->CI->Item_quantities->get_item_quantity($item_id, $item_location)->quantity,
+                        'in_suspended'=>$this->CI->Item_quantities->get_item_quantity_suspend($item_id, $item_location)->quantity_purchased,
 			'price'=>$price,
 			'total'=>$total,
 			'discounted_total'=>$this->get_item_total($quantity, $price, $discount, TRUE)

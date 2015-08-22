@@ -85,7 +85,7 @@ else
 		<tr>
 				<td><?php echo anchor("sales/delete_item/$line",'['.$this->lang->line('common_delete').']');?></td>
 				<td><?php echo $item['item_number']; ?></td>
-				<td style="align: center;"><?php echo $item['name']; ?><br /> [<?php echo $item['in_stock'] ?> in <?php echo $item['stock_name']; ?>]
+				<td style="align: center;"><?php echo $item['name']; ?><br /> [<?php echo $item['in_stock'] ?>s][<?php echo $item['in_suspended'] ?>b]=[<?php echo $item['in_stock']-$item['in_suspended'] ?>ub]
 				<?php echo form_hidden('location', $item['item_location']); ?>
 				</td>
 
