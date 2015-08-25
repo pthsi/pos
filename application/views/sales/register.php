@@ -93,7 +93,7 @@ else
 		<?php if ($items_module_allowed)
 		{
 		?>
-			<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
+                                <td><?php echo form_input(array('name'=>'price','value'=>number_format($item['price']),'size'=>'6'));?></td>
 
 		<?php
 		}
