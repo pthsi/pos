@@ -51,6 +51,21 @@ class Sale_lib
 	{
 		$this->CI->session->unset_userdata('comment');
 	}
+        
+        function get_no_reff() 
+	{
+		return $this->CI->session->userdata('no_reff');
+	}
+
+	function set_no_reff($no_reff) 
+	{
+		$this->CI->session->set_userdata('no_reff', $no_reff);
+	}
+
+	function clear_no_reff() 	
+	{
+		$this->CI->session->unset_userdata('no_reff');
+	}
 	
 	function get_invoice_number()
 	{
@@ -488,6 +503,7 @@ class Sale_lib
 		$this->set_customer($suspended_sale_info->person_id);
 		$this->set_comment($suspended_sale_info->comment);
 		$this->set_invoice_number($suspended_sale_info->invoice_number);
+                $this->set_no_reff($suspended_sale_info->no_reff);
 	}
 
 	function delete_item($line)

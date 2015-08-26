@@ -1,8 +1,8 @@
 <?php 
 
-$lang["login_go"] = "Go";
-$lang["login_invalid_username_and_password"] = "Invalid username/password";
-$lang["login_login"] = "Login";
-$lang["login_password"] = "Password";
-$lang["login_username"] = "Username";
-$lang["login_welcome_message"] = "Welcome to the Open Source Point of Sale System. To continue, please login using your username and password below.";
+$lang["login_go"] = "Lanjutkan";
+$lang["login_invalid_username_and_password"] = "Nama Pengguna/Kata Kunci Salah";
+$lang["login_login"] = "Masuk";
+$lang["login_password"] = "Kata kunci";
+$lang["login_username"] = "Nama Anda";
+$lang["login_welcome_message"] = "SELAMAT DATANG. Silahkan login untuk masuk aplikasi, Isikan Nama Pengguna dan Kata Kunci Anda di bawah ini.";

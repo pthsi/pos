@@ -29,7 +29,7 @@ if (isset($success))
 	<span><?php echo $this->lang->line('sales_overview'); ?><span></a>
 </div>
 <div id="show_suspended_sales_button">
-	<?php echo anchor("sales/suspended/width:425",
+	<?php echo anchor("sales/suspended/width:525",
 	"<div class='small_button'><span style='font-size:73%;'>".$this->lang->line('sales_suspended_sales')."</span></div>",
 	array('class'=>'thickbox none','title'=>$this->lang->line('sales_suspended_sales')));
 	?>
@@ -93,7 +93,7 @@ else
 		<?php if ($items_module_allowed)
 		{
 		?>
-                                <td><?php echo form_input(array('name'=>'price','value'=>number_format($item['price']),'size'=>'6'));?></td>
+                                <td><?php echo form_input(array('name'=>'price','value'=>to_currency_no_money($item['price']),'size'=>'6'));?></td>
 
 		<?php
 		}
@@ -254,7 +254,10 @@ else
 			<div id="finish_sale">
 				<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>
 				<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
-				<?php echo form_textarea(array('name'=>'comment', 'id' => 'comment', 'value'=>$comment,'rows'=>'4','cols'=>'23'));?>
+				<?php echo form_textarea(array('name'=>'comment', 'id' => 'comment', 'value'=>$comment,'rows'=>'1','cols'=>'23'));?>
+                                <br>
+                                <label id="comment_label" for="comment"><?php echo $this->lang->line('common_no_reff'); ?>:</label>
+				<?php echo form_input(array('name'=>'no_reff', 'id'=>'no_reff', 'value'=>$no_reff,'size'=>'12','readonly'=>'readonly'));?>
 				<br />
 		<br />
 				
@@ -270,12 +273,24 @@ else
 					    )).'<br />('.$customer_email.')<br />';
 				}
 				 
-				if ($payments_cover_total)
-				{
-					echo "<div class='small_button' id='finish_sale_button' style='float:left;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
-				}
+                                
+                                    if (!$mode == "sale") 
+                                        {
+                                                if ($payments_cover_total)
+                                                                    {
+                                                                            echo "<div class='small_button' id='finish_sale_button' style='float:left;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
+                                                                    }		
+                                        }
+                                    if ($mode == "cashier") 
+                                        {
+                                                if ($payments_cover_total)
+                                                                    {
+                                                                            echo "<div class='small_button' id='finish_sale_button' style='float:left;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
+                                                                    }		
+                                        }
+                                
 				echo "<div class='small_button' id='suspend_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_suspend_sale')."</span></div>";
-				?>
+                                    ?>
 			</div>
 	</form>
 		<?php
@@ -319,36 +334,6 @@ else
 						?>
 					</td>
 				</tr>
-				<?php if ($mode == "sale") 
-				{
-				?>
-				<tr>
-					<td>
-						<?php echo $this->lang->line('sales_invoice_enable'); ?>
-					</td>
-					<td>
-						<?php if ($invoice_number_enabled)
-						{
-							echo form_checkbox(array('name'=>'sales_invoice_enable','id'=>'sales_invoice_enable','checked'=>'checked'));
-						}
-						else
-						{
-							echo form_checkbox(array('name'=>'sales_invoice_enable','id'=>'sales_invoice_enable'));
-						}
-						?>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<?php echo $this->lang->line('sales_invoice_number').':   ';?>
-					</td>
-					<td>
-						<?php echo form_input(array('name'=>'sales_invoice_number','id'=>'sales_invoice_number','value'=>$invoice_number,'size'=>10));?>
-					</td>
-				</tr>
-				<?php 
-				}
-				?>
 				<tr>
 					<td>
 					<?php echo $this->lang->line('sales_payment').':   ';?>
@@ -361,7 +346,7 @@ else
 					<td><span id="amount_tendered_label"><?php echo $this->lang->line( 'sales_amount_tendered' ).': '; ?></span>
 					</td>
 					<td>
-				<?php echo form_input( array( 'name'=>'amount_tendered', 'id'=>'amount_tendered', 'value'=>to_currency_no_money($amount_due), 'size'=>'10' ) );	?>
+				<?php echo form_input( array( 'name'=>'amount_tendered', 'id'=>'amount_tendered', 'value'=>to_currency_no_money($amount_due), 'size'=>'9' ) );	?>
 			</td>
 				</tr>
 			</table>

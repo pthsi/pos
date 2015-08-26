@@ -236,8 +236,8 @@ class Sales extends Secure_area
 		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|numeric');
 		$this->form_validation->set_rules('discount', 'lang:items_discount', 'required|numeric');
 
-        $description = $this->input->post("description");
-        $serialnumber = $this->input->post("serialnumber");
+                $description = $this->input->post("description");
+                $serialnumber = $this->input->post("serialnumber");
 		$price = $this->input->post("price");
 		$quantity = $this->input->post("quantity");
 		$discount = $this->input->post("discount");
@@ -649,7 +649,7 @@ class Sales extends Secure_area
 	{
 		$person_info = $this->Employee->get_logged_in_employee_info();
 		$data['cart']=$this->sale_lib->get_cart();	 
-                $data['modes']=array('sale'=>$this->lang->line('sales_sale'),'return'=>$this->lang->line('sales_return'));
+                $data['modes']=array('sale'=>$this->lang->line('sales_sale'),'return'=>$this->lang->line('sales_return'),'cashier'=>$this->lang->line('sales_cashier'));
                 $data['mode']=$this->sale_lib->get_mode();
 
                 $data['stock_locations']=$this->Stock_locations->get_allowed_locations('sales');
@@ -662,6 +662,7 @@ class Sales extends Secure_area
 		$data['total']=$this->sale_lib->get_total();
 		$data['items_module_allowed']=$this->Employee->has_grant('items', $person_info->person_id);
 		$data['comment']=$this->sale_lib->get_comment();
+                $data['no_reff']=$this->sale_lib->get_no_reff();
 		$data['email_receipt']=$this->sale_lib->get_email_receipt();
 		$data['payments_total']=$this->sale_lib->get_payments_total();
 		$data['amount_due']=$this->sale_lib->get_amount_due();
@@ -707,6 +708,7 @@ class Sales extends Secure_area
 		$customer_id=$this->sale_lib->get_customer();
 		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
 		$comment = $this->input->post('comment');
+                $no_reff = $this->input->post('no_reff');
 		$invoice_number=$this->sale_lib->get_invoice_number();
 		
 		$emp_info=$this->Employee->get_info($employee_id);
@@ -717,9 +719,9 @@ class Sales extends Secure_area
 		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
 		
-		if ($this->Sale_suspended->invoice_number_exists($invoice_number))
+		if ($comment=='')
 		{
-			$this->_reload(array('error' => $data['error']=$this->lang->line('sales_invoice_number_duplicate')));
+			$this->_reload(array('error' => $data['error']=$this->lang->line('sales_spg_empty')));
 		}
 		else
 		{
@@ -744,7 +746,9 @@ class Sales extends Secure_area
 			}
 	
 			//SAVE sale to database
-			$data['sale_id']='POS '.$this->Sale_suspended->save($data['cart'], $customer_id,$employee_id,$comment,$invoice_number,$data['payments']);
+                        //di table ospos_sales_suspended column
+                        //$data['sale_id']='POS '.$this->Sale_suspended->save($data['cart'], $customer_id,$employee_id,$comment,$invoice_number,$data['payments']);
+			$data['sale_id']='POS '.$this->Sale_suspended->save($data['cart'], $customer_id,$employee_id,$comment,$no_reff,$invoice_number,$data['payments']);
 			if ($data['sale_id'] == 'POS -1')
 			{
 				$data['error_message'] = $this->lang->line('sales_transaction_failed');

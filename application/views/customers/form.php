@@ -89,15 +89,11 @@ $(document).ready(function()
 		rules: 
 		{
 			first_name: "required",
-			last_name: "required",
-    		email: "email",
     		account_number: { account_number: true }
    		},
 		messages: 
 		{
-     		first_name: "<?php echo $this->lang->line('common_first_name_required'); ?>",
-     		last_name: "<?php echo $this->lang->line('common_last_name_required'); ?>",
-     		email: "<?php echo $this->lang->line('common_email_invalid_format'); ?>"
+     		first_name: "<?php echo $this->lang->line('common_first_name_required'); ?>"
 		}
 	});
 });

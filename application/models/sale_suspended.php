@@ -46,14 +46,32 @@ class Sale_suspended extends CI_Model
 		
 		return $success;
 	}
+        
+        function getSelectedData($table,$data)
+	{
+		return $this->db->get_where($table, $data);
+	}
+        
+        function get_minutes($time_string) {
+            $parts = explode(":", $time_string);
+
+            $hours = intval($parts[0]);
+            $minutes = intval($parts[1]);
+
+            return $hours*60 + $minutes;
+        }
 	
-	function save ($items,$customer_id,$employee_id,$comment,$invoice_number,$payments,$sale_id=false)
+	function save ($items,$customer_id,$employee_id,$comment,$no_reff,$invoice_number,$payments,$sale_id=false)
 	{
 		if(count($items)==0)
 			return -1;
-
+                
+                //$id['id_glasir']=$this->input->post('kode_glasir');
+                //$data = $this->glzModel->getSelectedData("glasir",$id);
+                
 		$sales_data = array(
 			'sale_time' => date('Y-m-d H:i:s'),
+                        'no_reff' => $this->get_minutes(date('H:i'))+$this->get_minutes(date('i:s')),
 			'customer_id'=> $this->Customer->exists($customer_id) ? $customer_id : null,
 			'employee_id'=>$employee_id,
 			'comment'=>$comment,
