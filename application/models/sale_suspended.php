@@ -68,15 +68,26 @@ class Sale_suspended extends CI_Model
                 
                 //$id['id_glasir']=$this->input->post('kode_glasir');
                 //$data = $this->glzModel->getSelectedData("glasir",$id);
-                
-		$sales_data = array(
-			'sale_time' => date('Y-m-d H:i:s'),
-                        'no_reff' => $this->get_minutes(date('H:i'))+$this->get_minutes(date('i:s')),
-			'customer_id'=> $this->Customer->exists($customer_id) ? $customer_id : null,
-			'employee_id'=>$employee_id,
-			'comment'=>$comment,
-			'invoice_number'=>$invoice_number
-		);
+                if (empty($no_reff)){
+                    $sales_data = array(
+                            'sale_time' => date('Y-m-d H:i:s'),
+                            'no_reff' => $this->get_minutes(date('H:i'))+$this->get_minutes(date('i:s')),
+                            'customer_id'=> $this->Customer->exists($customer_id) ? $customer_id : null,
+                            'employee_id'=>$employee_id,
+                            'comment'=>$comment,
+                            'invoice_number'=>$invoice_number
+                    );
+                }else if (!empty($no_reff)){
+                    $sales_data = array(
+                            'sale_time' => date('Y-m-d H:i:s'),
+                            'no_reff' =>$no_reff,
+                            'customer_id'=> $this->Customer->exists($customer_id) ? $customer_id : null,
+                            'employee_id'=>$employee_id,
+                            'comment'=>$comment,
+                            'invoice_number'=>$invoice_number
+                    );
+                }
+                    
 
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();

@@ -533,6 +533,7 @@ class Sale_lib
 		$this->clear_mode();
 		$this->empty_cart();
 		$this->clear_comment();
+                $this->clear_no_reff();
 		$this->clear_email_receipt();
 		$this->clear_invoice_number();
 		$this->clear_giftcard_remainder();
